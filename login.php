@@ -522,8 +522,8 @@ if (
                             <a href="<?= htmlspecialchars($registerLinks[$loginAs] ?? 'register.php') ?>"
                                 id="registerLink"
                                 data-student="register.php"
-                                data-instructor="register_instructor.php"
-                                data-coordinator="register_coordinator.php">Create Account</a>
+                                data-instructor="register_roles.php"
+                                data-coordinator="register_roles.php">Create Account</a>
                         </span>
                     </div>
                 </div>

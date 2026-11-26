@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="register.css">
+   
     <link rel="stylesheet" href="register.css">
 </head>
 <body>
@@ -410,10 +410,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <a href="login.php">Login</a>
                 </p>
 
-                <a href="index.php" class="back-link">← Back to home</a>
+                <a href="login.php" class="back-link">← Back to home</a>
             </div>
         </div>
-
         <div class="auth-security">
             <span class="security-icon">✓</span>
             <div>
