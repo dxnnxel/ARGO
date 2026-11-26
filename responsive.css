@@ -1,0 +1,302 @@
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+img, svg { max-width: 100%; }
+
+
+
+/* ---------------------------------------------------------------------
+   2. Header bar
+   --------------------------------------------------------------------- */
+.header-wrapper {
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 5px clamp(12px, 3vw, 35px);
+}
+.header-wrapper .header-left { flex: 0 0 auto; }
+.header-wrapper .header-left .logo {
+  width: clamp(2.5rem, 4vw, 4rem);
+  height: clamp(2.5rem, 4vw, 4rem);
+}
+.header-wrapper .header-center {
+  position: static;            /* was absolute + 5rem padding */
+  flex: 1 1 200px;
+  min-width: 0;
+  padding: 0 1rem;
+  font-size: inherit;
+}
+.header-wrapper .header-center p { font-size: clamp(14px, 1.3vw, 17px); }
+.header-wrapper .header-center .text-2 { font-size: clamp(10px, 0.9vw, 12px); }
+.header-right { flex: 0 0 auto; }
+
+/* ---------------------------------------------------------------------
+   3. Shared pieces that were absolutely positioned
+   --------------------------------------------------------------------- */
+
+/* Info card (Instructor / Program / Section ...) */
+.info-card {
+  position: static;
+  width: auto;
+  max-width: none;
+  flex-wrap: wrap;
+  gap: 10px 0;
+  padding: 18px 12px;
+  margin: 16px 20px 0 20px;
+}
+.info-item { flex: 1 1 180px; flex-wrap: wrap; text-align: center; }
+
+/* Grades table card (list.html / input-grades.html) */
+.table-container {
+  position: static;
+  width: auto;
+  max-width: none;
+  margin: 16px 20px 24px 20px;
+  overflow-x: auto;
+}
+.table-container table { min-width: 880px; }
+.table-container tbody td:nth-child(2) { white-space: nowrap; }
+table { font-size: clamp(12px, 1.1vw, 15px); }
+th, td { padding: 15px clamp(8px, 1vw, 15px); }
+.input-field { width: 100%; min-width: 54px; max-width: 80px; }
+
+/* Right-hand summary panel */
+.subsum-panel {
+  position: static;
+  width: auto;
+  min-height: 0;
+  margin: 0;
+}
+
+/* Approval page table */
+.revpage-main {
+  position: static;
+  padding: 0;
+  margin: 0 20px 24px 20px;
+}
+.revpage-main .gradetbl-wrap { margin-top: 0; }
+.table-scroll { overflow-x: auto; }
+.table-scroll table { min-width: 620px; }
+
+/* ---------------------------------------------------------------------
+   4. Pages that have the right-hand summary panel
+      (list.html, input-grades.html, approval.html)
+   --------------------------------------------------------------------- */
+.main-content:has(> .subsum-panel) {
+  grid-template-columns: minmax(0, 1fr) clamp(240px, 22vw, 290px);
+  grid-template-rows: auto auto 1fr;
+  align-content: stretch;
+}
+.main-content:has(> .subsum-panel) > .header-wrapper { grid-column: 1 / -1; grid-row: 1; }
+.main-content:has(> .subsum-panel) > .info-card      { grid-column: 1; grid-row: 2; align-self: start; }
+.main-content:has(> .subsum-panel) > .table-container,
+.main-content:has(> .subsum-panel) > .revpage-main   { grid-column: 1; grid-row: 3; align-self: start; }
+.main-content:has(> .subsum-panel) > .subsum-panel   { grid-column: 2; grid-row: 2 / span 2; align-self: stretch; }
+
+/* ---------------------------------------------------------------------
+   5. Instructor dashboard (index.html)
+   --------------------------------------------------------------------- */
+.main-content:has(> .ins-dashboard-container) {
+  grid-template-columns: minmax(0, 1fr) clamp(260px, 24vw, 320px);
+  column-gap: 20px;
+  padding-bottom: 24px;
+}
+.main-content:has(> .ins-dashboard-container) > .header-wrapper { grid-column: 1 / -1; grid-row: 1; }
+.main-content:has(> .ins-dashboard-container) > .ins-dashboard-container {
+  grid-column: 1 / -1; grid-row: 2; margin: 20px 20px 0 20px;
+}
+.main-content:has(> .ins-dashboard-container) > .main-page {
+  grid-column: 1; grid-row: 3; align-self: start; margin: 20px 0 0 20px;
+}
+.main-content:has(> .ins-dashboard-container) > .class-status {
+  grid-column: 2; grid-row: 3; align-self: start; margin: 20px 20px 0 0;
+}
+
+.ins-dashboard-container {
+  position: static;
+  width: auto;
+  margin-left: 0;
+  padding: 28px clamp(20px, 4vw, 50px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px 24px;
+  align-items: center;
+}
+.ins-dashboard-container .date { position: static; grid-column: 1 / -1; font-size: clamp(14px, 1.3vw, 18px); }
+.ins-dashboard-container .date p { margin: 0; }
+.ins-dashboard-container .ins { position: static; font-size: clamp(16px, 1.6vw, 20px); margin-bottom: 4px; }
+.ins-dashboard-container .dahsboard { display: flex; flex-direction: column; gap: 8px; }
+.ins-dashboard-container .your-classes { position: static; display: block; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.1; }
+.ins-dashboard-container .message { position: static; display: flex; flex-direction: column; gap: 2px; }
+.ins-dashboard-container .stats {
+  position: static; transform: none; padding: 0;
+  gap: clamp(10px, 1.5vw, 25px); flex-wrap: wrap;
+}
+
+.main-page { position: static; padding: 24px clamp(16px, 2vw, 30px); }
+.main-page-container {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 12px 16px;
+}
+.main-page .class-label-container { position: static; }
+.main-page .class-label-container h1 { padding: 0; font-size: clamp(18px, 2vw, 25px); }
+.main-page .class-label { position: static; display: flex; flex-wrap: wrap; gap: 10px; padding: 0; }
+.main-page .classes-content { flex: 1 1 100%; }
+
+.card { gap: 1rem; flex-wrap: wrap; margin: 12px 0; }
+.card-r { flex: 1 1 220px; }
+.card-r h1 { position: static; font-size: clamp(15px, 1.5vw, 20px); }
+.card-r .sub_des { position: static; white-space: normal; }
+
+.class-status {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  padding: 1rem;
+}
+.class-status .classes { height: auto; }
+.classes li { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; margin: 6px 0; }
+.classes button { margin-left: auto; }
+
+/* ---------------------------------------------------------------------
+   6. Student dashboard (student.php)
+   --------------------------------------------------------------------- */
+.main-content:has(> .greet-card-container) {
+  grid-template-columns: minmax(0, 1fr) clamp(260px, 26vw, 370px);
+  column-gap: 20px;
+  padding-bottom: 24px;
+}
+.main-content:has(> .greet-card-container) > .header-wrapper      { grid-column: 1 / -1; grid-row: 1; }
+.main-content:has(> .greet-card-container) > .main-page-student   { grid-column: 1; grid-row: 2; }
+.main-content:has(> .greet-card-container) > .greet-card-container{ grid-column: 1; grid-row: 3; }
+.main-content:has(> .greet-card-container) > .sub-grid            { grid-column: 1; grid-row: 4; }
+.main-content:has(> .greet-card-container) > .gr-side-column {
+  grid-column: 2; grid-row: 2 / span 3; align-self: start; margin: 16px 20px 0 0;
+}
+
+.main-page-student { gap: 1rem; flex-wrap: wrap; margin: 10px 20px; }
+.main-page-student h1 { flex: 1 1 auto; margin-left: 0; padding: 10px 0; }
+
+.greet-card-container {
+  position: relative;
+  width: auto;
+  margin: 0 0 0 20px;
+  padding: 24px clamp(20px, 4vw, 50px);
+  gap: 6px;
+}
+.greet-card-container .date { position: static; font-size: clamp(14px, 1.3vw, 18px); }
+.greet-card-container .date p { margin: 0; }
+.greet-card-container .greeting { position: static; font-size: clamp(24px, 3vw, 38px); }
+.greet-card-container .greet { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.greet-card-container .user { position: static; flex: 1 1 100%; font-size: clamp(24px, 3vw, 38px); }
+.greet-card-container .message { position: static; flex: 1 1 100%; display: flex; flex-direction: column; margin-bottom: 10px; }
+.greet-card-container .num-sub,
+.greet-card-container .num-unit,
+.greet-card-container .gwa { position: static; padding: 5px 12px; }
+
+.sub-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  max-width: none;
+  margin: 16px 0 24px 20px;
+}
+.subject-content { width: auto; margin: 0; }
+.sub-top, .sub-bottom { width: 100%; }
+.sub-top .sub-l { padding-right: 70px; }
+
+.gr-side-column { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.gsc-grid { position: static; width: 100%; max-width: none; margin: 0; }
+.avg-status {
+  position: static;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 24px 16px;
+}
+.avg-status p { position: static; font-size: 20px; }
+.ring { position: relative; top: auto; left: auto; }
+.avg-status .cap { position: static; text-align: center; letter-spacing: 1px; }
+
+/* ---------------------------------------------------------------------
+   7. Student grades page (grades.php)
+   --------------------------------------------------------------------- */
+.card-container { gap: 12px; padding: clamp(12px, 2vw, 32px); }
+.card-Consultation { flex: 1 1 200px; width: auto; height: auto; min-height: 150px; margin: 0; }
+.gr-card { margin: 0 clamp(12px, 3vw, 50px) 24px; max-width: 1100px; }
+.gr-header { gap: 12px; }
+.gr-table-wrap { overflow-x: auto; }
+.gr-table { min-width: 520px; }
+.gr-footer { flex-wrap: wrap; gap: 12px; }
+
+/* ---------------------------------------------------------------------
+   8. Coordinator queue (coordinator.php)
+   --------------------------------------------------------------------- */
+.sg-stats-card { flex-basis: clamp(200px, 22vw, 236px); }
+
+/* =====================================================================
+   BREAKPOINTS
+   ===================================================================== */
+
+/* Tablet / zoomed-in desktop: the right-hand column drops below */
+@media (max-width: 1100px) {
+  .main-content:has(> .subsum-panel),
+  .main-content:has(> .ins-dashboard-container),
+  .main-content:has(> .greet-card-container) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    align-content: start;
+  }
+  .main-content:has(> .subsum-panel) > .subsum-panel {
+    grid-column: 1; grid-row: 4; align-self: start;
+    border-left: 0; border-top: 1px solid var(--subsum-line);
+  }
+  .main-content:has(> .ins-dashboard-container) > .class-status {
+    grid-column: 1; grid-row: 4; margin: 20px 20px 0 20px;
+  }
+  .main-content:has(> .greet-card-container) > .gr-side-column {
+    grid-column: 1; grid-row: 5; margin: 0 20px 0 20px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  .info-item:not(:last-child)::after { display: none; }
+}
+
+/* Sidebar becomes a top bar */
+@media (max-width: 900px) {
+  body { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    padding: 8px 16px;
+    border-right: 0;
+    border-bottom: 1px solid var(--sb-line);
+  }
+  .sidebar .brand { margin: 6px 0; }
+  .sidebar .sys-description { display: none; }
+  .sidebar .student_card { margin: 0; }
+  .sidebar .menu { height: auto; width: 100%; display: flex; flex-wrap: wrap; gap: 4px; }
+  .menu li { padding: 0.25rem 0.5rem; margin: 0; font-size: 1rem; }
+  .menu a { padding: 6px 8px; }
+  .menu i { margin-right: 8px; }
+  .main-content { min-height: 0; }
+  .ins-dashboard-container { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Phones */
+@media (max-width: 700px) {
+  .header-wrapper .profile-text,
+  .header-wrapper .header-center .text-2 { display: none; }
+  .info-item { flex-basis: 100%; }
+  .stats { width: 100%; }
+  .A, .C, .R { padding: 8px 14px; }
+  .card-r .sub_des { font-size: 10px; }
+  .b1 { min-width: 0; width: 100%; }
+  .card-l, .card-l a { width: 100%; }
+  .gr-card { border-radius: 12px; }
+}
