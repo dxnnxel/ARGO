@@ -54,7 +54,7 @@
               <img src="images/cvsulogo.png" alt="logo" class="logo"> 
           </div>
           <div class="header-center">
-             <p> Instructor Dashboard</p>
+             <p> Coordinator Dashboard</p>
           </div>
           <div class="header-right">
             <div class="profile"><i class="far fa-user profile-icon"></i>
@@ -76,18 +76,6 @@
     <h1 class="sg-page-title">SUBMITTED GRADES</h1>
  
     <div class="sg-layout">
-      <!-- Stats card -->
-      <aside class="sg-stats-card">
-        <h2 class="sg-stats-title">APPROVAL QUEUE STATISTICS</h2>
-        <div class="sg-stat-row">
-          <span class="sg-stat-label">Total Pending Approvals</span>
-          <span class="sg-stat-value sg-stat-pending">18</span>
-        </div>
-        <div class="sg-stat-row">
-          <span class="sg-stat-label">Total Approvals Done</span>
-          <span class="sg-stat-value sg-stat-done">5</span>
-        </div>
-      </aside>
  
       <!-- Table card -->
       <section class="sg-table-card">
@@ -186,6 +174,59 @@
       </section>
     </div>
   </main>
+  
+ <aside class="subsum-panel">
+ 
+    <!-- Title -->
+    <div class="subsum-header">
+      <i class="far fa-file-lines subsum-header-icon"></i>
+      <h2 class="subsum-title">APPROVAL QUEUE STATISTICS</h2>
+    </div>
+ 
+    <!-- Stats -->
+    <ul class="subsum-stats">
+      <li class="subsum-stat">
+        <span class="subsum-stat-label">Total Pending approval:</span>
+        <span class="subsum-stat-value" id="sumTotal">18</span>
+      </li>
+      <li class="subsum-stat">
+        <span class="subsum-stat-label">Total Approval Done:</span>
+        <span class="subsum-stat-value" id="sumPassed">5</span>
+      </li>
+    </ul>
+ 
+    <!-- Actions 
+    <div class="subsum-actions">
+      <a href="input-grades.html" style="text-decoration: none;">
+      <button type="button" class="subsum-btn subsum-btn-approve">
+        <i class="fas fa-pen"></i>
+        INPUT GRADES
+      </button>
+      </a>
+      <a href="" style="text-decoration: none;">
+      <button type="button" class="subsum-btn subsum-btn-approve">
+        <i class="fas fa-plus"></i>
+        ADD ACTIVITIES
+      </button>
+      </a>
+ 
+      <button type="button" class="subsum-btn subsum-btn-return">
+        <i class="far fa-remove"></i>
+          REMOVE ACTIVITIES
+      </button>
+       <a href="" style="text-decoration: none;">
+      <button type="button" class="subsum-btn subsum-btn-back">  
+        &larr; Submit
+      </button>
+      </a>
+    </div>-->
+    <!-- Info box -->
+    <div class="subsum-note">
+      <h3 class="subsum-note-title">Approved Records</h3>
+      <p class="subsum-note-text">
+       Approved Recods will be seen in the student account portal for transparency of their grades and perfomances.
+    </div>
+  </aside>
          </div>
    <script src="script.js"></script>
          </body>
