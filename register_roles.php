@@ -137,8 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-   
-    <link rel="stylesheet" href="register.css">
+   <link rel="stylesheet" href="register.css?v=2">
 </head>
 <body>
 <div class="page-wrapper">
@@ -268,44 +267,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             value="<?= old("department") ?>"
                             required
                         >
-                    </div>
-                </div>
-
-                <!-- INSTRUCTOR ONLY -->
-                <div class="role-fields" data-role="instructor" <?= $role === "instructor" ? "" : "hidden" ?>>
-                    <div class="form-group">
-                        <label for="academic_rank">Academic Rank</label>
-                        <select id="academic_rank" name="academic_rank" required>
-                            <option value="" disabled <?= old("academic_rank") === "" ? "selected" : "" ?>>
-                                Select your rank
-                            </option>
-                            <?php foreach ($ranks as $r): ?>
-                                <option
-                                    value="<?= htmlspecialchars($r) ?>"
-                                    <?= ($_POST["academic_rank"] ?? "") === $r ? "selected" : "" ?>
-                                >
-                                    <?= htmlspecialchars($r) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- COORDINATOR ONLY -->
-                <div class="role-fields" data-role="coordinator" <?= $role === "coordinator" ? "" : "hidden" ?>>
-                    <div class="form-group">
-                        <label for="designation">Coordinator Designation</label>
-                        <input
-                            type="text"
-                            id="designation"
-                            name="designation"
-                            placeholder="e.g. OJT Coordinator"
-                            value="<?= old("designation") ?>"
-                            required
-                        >
-                        <span class="input-help">
-                            Your role or office as a coordinator.
-                        </span>
                     </div>
                 </div>
 
