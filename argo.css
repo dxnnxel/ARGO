@@ -2190,3 +2190,51 @@ tbody tr:hover {
     flex: 1;
   }
 }
+
+/* ===== list.php: score inputs + add/remove activity modals ===== */
+.score-input{width:64px;padding:4px;text-align:center;border:1px solid #cfd8d3;border-radius:4px;font:inherit;background:#fff}
+.score-input:focus{outline:2px solid #1b4d3a}
+.table-container{overflow-x:auto}
+dialog.argo-dialog{border:none;border-radius:16px;padding:0;width:min(440px,92vw);box-shadow:0 24px 60px rgba(0,0,0,.28);color:#1f2a24;overflow:hidden; margin:auto; inset:0;}
+dialog.argo-dialog::backdrop{background:rgba(10,30,22,.55);backdrop-filter:blur(2px)}
+dialog.argo-dialog[open]{animation:argoPop .16s ease-out}
+@keyframes argoPop{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+dialog.argo-dialog *{box-sizing:border-box}
+dialog.argo-dialog .dlg-head{display:flex;align-items:flex-start;gap:12px;padding:20px 22px 14px;background:linear-gradient(135deg,#0f3d2b,#1b6b4a);color:#fff}
+dialog.argo-dialog .dlg-icon{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+dialog.argo-dialog .dlg-head h3{margin:0;font-size:18px;color:#fff}
+dialog.argo-dialog .dlg-head p{margin:2px 0 0;font-size:12px;opacity:.8}
+dialog.argo-dialog .dlg-x{margin-left:auto;border:none;background:transparent;color:#fff;font-size:22px;line-height:1;cursor:pointer;opacity:.8}
+dialog.argo-dialog .dlg-x:hover{opacity:1}
+dialog.argo-dialog .dlg-body{padding:18px 22px 6px;max-height:60vh;overflow:auto}
+dialog.argo-dialog .dlg-label{display:block;margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:.08em;color:#4b5f55;text-transform:uppercase}
+dialog.argo-dialog .dlg-field{margin-bottom:16px}
+dialog.argo-dialog .pills{display:flex;gap:8px;flex-wrap:wrap}
+dialog.argo-dialog .pill{position:relative;flex:1}
+dialog.argo-dialog .pill input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+dialog.argo-dialog .pill span{display:block;text-align:center;padding:9px 12px;border:1.5px solid #cdd9d2;border-radius:10px;font-size:14px;background:#fff;transition:.12s}
+dialog.argo-dialog .pill:hover span{border-color:#1b6b4a}
+dialog.argo-dialog .pill input:checked + span{background:#1b4d3a;border-color:#1b4d3a;color:#fff;font-weight:600}
+dialog.argo-dialog .pill input:focus-visible + span{outline:3px solid #9fd3b9}
+dialog.argo-dialog .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+dialog.argo-dialog .num{width:100%;height:42px;padding:0 12px;border:1.5px solid #cdd9d2;border-radius:10px;font:inherit;font-size:15px;background:#fff;color:#1f2a24;text-align:center;appearance:textfield;-moz-appearance:textfield}
+dialog.argo-dialog .num::-webkit-outer-spin-button,dialog.argo-dialog .num::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+dialog.argo-dialog .num:focus{outline:none;border-color:#1b6b4a;box-shadow:0 0 0 3px #cfe8dc}
+dialog.argo-dialog .stepper{display:flex;gap:6px}
+dialog.argo-dialog .stepper button{width:42px;height:42px;flex:none;border:1.5px solid #cdd9d2;border-radius:10px;background:#f4f8f6;font-size:18px;cursor:pointer;color:#1b4d3a}
+dialog.argo-dialog .stepper button:hover{background:#e2efe8}
+dialog.argo-dialog .preview{margin:2px 0 16px;padding:10px 12px;border-radius:10px;background:#eef6f1;border:1px dashed #9fc7b2;font-size:13px;color:#1b4d3a}
+dialog.argo-dialog .dlg-foot{display:flex;justify-content:flex-end;gap:10px;padding:14px 22px 20px}
+dialog.argo-dialog .btn{height:40px;padding:0 20px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;border:1.5px solid #1b4d3a;background:#fff;color:#1b4d3a}
+dialog.argo-dialog .btn:hover{background:#eef6f1}
+dialog.argo-dialog .btn-primary{background:#1b4d3a;color:#fff}
+dialog.argo-dialog .btn-primary:hover{background:#14392b}
+dialog.argo-dialog .btn-danger{background:#c0392b;border-color:#c0392b;color:#fff}
+dialog.argo-dialog .btn-danger:hover{background:#a02f23}
+dialog.argo-dialog .group-title{margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:.08em;color:#4b5f55;text-transform:uppercase}
+dialog.argo-dialog .item{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-bottom:6px;border:1.5px solid #e1e9e4;border-radius:10px;cursor:pointer;font-size:14px}
+dialog.argo-dialog .item:hover{background:#f6faf8}
+dialog.argo-dialog .item input{accent-color:#c0392b;margin:0}
+dialog.argo-dialog .item:has(input:checked){border-color:#c0392b;background:#fdf2f0}
+dialog.argo-dialog .item small{margin-left:auto;color:#6b7c73;font-size:12px}
+dialog.argo-dialog .warn{margin:4px 0 12px;padding:10px 12px;border-radius:10px;background:#fff6e5;border:1px solid #f0d9a5;font-size:12px;color:#7a5a13}

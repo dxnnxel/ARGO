@@ -7,6 +7,28 @@ require_once "auth_functions.php";
 
 $error = "";
 
+/* Where each role lands after login. CHANGE the coordinator page to yours. */
+$homePages = [
+    "student"       => "student.php",
+    "instructor"    => "list.php",
+    "coordinator"   => "coordinator.php",
+    "administrator" => "admin_dashboard.php",
+];
+
+/* Instructors and coordinators must still be on the official employee list. */
+function isAuthorizedEmployee(mysqli $conn, string $email, string $role): bool
+{
+    $stmt = $conn->prepare(
+        "SELECT id FROM authorized_employees
+          WHERE email = ? AND role = ? AND is_active = 1 LIMIT 1"
+    );
+    $stmt->bind_param("ss", $email, $role);
+    $stmt->execute();
+    $ok = (bool) $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    return $ok;
+}
+
 
 /* LOGGED IN */
 
@@ -54,21 +76,7 @@ if (isset($_SESSION["user_id"])) {
             (int) $user["email_verified"] === 1
         ) {
 
-            if (
-                $user["role"] ===
-                "administrator"
-            ) {
-
-                header(
-                    "Location: admin_dashboard.php"
-                );
-
-            } else {
-
-                header(
-                    "Location: student.php"
-                );
-            }
+            header("Location: " . ($homePages[$user["role"]] ?? "student.php"));
 
 
             exit;
@@ -185,6 +193,14 @@ if (
                       "No " . ucfirst($loginAs) . " account found for this email.";
 
             } elseif (
+                in_array($user["role"], ["instructor", "coordinator"], true) &&
+                !isAuthorizedEmployee($conn, strtolower($user["email"]), $user["role"])
+            ) {
+
+                $error =
+                    "This email is not on the authorized " . $user["role"] . " list. Please contact the administrator.";
+
+            } elseif (
                 $user["role"] === "student" &&
                 !isCvsuEmail(
                     $user["email"]
@@ -216,7 +232,9 @@ if (
             ) {
 
                 $error =
-                    "This account is still pending verification.";
+                    ($user["role"] === "coordinator" && (int) $user["email_verified"] === 1)
+                        ? "Your coordinator account is awaiting administrator approval."
+                        : "This account is still pending verification.";
 
             } elseif (
                 $user["account_status"]
@@ -515,15 +533,15 @@ if (
                             <?php
                             $registerLinks = [
                               "student"     => "register.php",
-                              "instructor"  => "register_instructor.php",
-                              "coordinator" => "register_coordinator.php",
+                              "instructor"  => "register_roles.php?role=instructor",
+                              "coordinator" => "register_roles.php?role=coordinator",
                             ];
                             ?>
                             <a href="<?= htmlspecialchars($registerLinks[$loginAs] ?? 'register.php') ?>"
                                 id="registerLink"
                                 data-student="register.php"
-                                data-instructor="register_roles.php"
-                                data-coordinator="register_roles.php">Create Account</a>
+                                data-instructor="register_roles.php?role=instructor"
+                                data-coordinator="register_roles.php?role=coordinator">Create Account</a>
                         </span>
                     </div>
                 </div>

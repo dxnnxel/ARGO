@@ -98,7 +98,7 @@
                 <td>BSCS</td>
                 <td class="sg-bold">5/28/2026</td>
                 <td>BSCS-2B</td>
-                <td class="sg-center"><a href="#" class="sg-btn-review">REVIEW</a></td>
+                <td class="sg-center"><a href="approval.html" class="sg-btn-review">REVIEW</a></td>
               </tr>
               <tr>
                 <td>100009</td>
@@ -106,7 +106,7 @@
                 <td>BSCS</td>
                 <td class="sg-bold">5/31/2026</td>
                 <td>BSCS-1B</td>
-                <td class="sg-center"><a href="#" class="sg-btn-review">REVIEW</a></td>
+                <td class="sg-center"><a href="approval.html" class="sg-btn-review">REVIEW</a></td>
               </tr>
               <tr>
                 <td>100021</td>
@@ -114,7 +114,7 @@
                 <td>BSCS</td>
                 <td class="sg-bold">5/31/2026</td>
                 <td>BSCS-2C</td>
-                <td class="sg-center"><a href="#" class="sg-btn-review">REVIEW</a></td>
+                <td class="sg-center"><a href="approval.html" class="sg-btn-review">REVIEW</a></td>
               </tr>
               <tr class="sg-selected">
                 <td><span class="sg-id-with-dot">100001</span></td>
@@ -122,7 +122,7 @@
                 <td>BSCS</td>
                 <td>5/31/2026</td>
                 <td>BSCS-2B</td>
-                <td class="sg-center"><a href="#" class="sg-link-view">VIEW</a></td>
+                <td class="sg-center"><a href="approval.html" class="sg-link-view">VIEW</a></td>
               </tr>
               <tr>
                 <td>100001</td>
@@ -130,7 +130,7 @@
                 <td>BSCS</td>
                 <td class="sg-bold">5/31/2026</td>
                 <td>BSCS-3B</td>
-                <td class="sg-center"><a href="#" class="sg-btn-review">REVIEW</a></td>
+                <td class="sg-center"><a href="approval.html" class="sg-btn-review">REVIEW</a></td>
               </tr>
               <tr>
                 <td>100004</td>
@@ -138,7 +138,7 @@
                 <td>BSCS</td>
                 <td class="sg-bold">5/31/2026</td>
                 <td>BSCS-3A</td>
-                <td class="sg-center"><a href="#" class="sg-btn-review">REVIEW</a></td>
+                <td class="sg-center"><a href="approval.html" class="sg-btn-review">REVIEW</a></td>
               </tr>
               <tr>
                 <td>100005</td>
@@ -146,7 +146,7 @@
                 <td>BSCS</td>
                 <td class="sg-bold">5/31/2026</td>
                 <td>BSCS-1B</td>
-                <td class="sg-center"><a href="#" class="sg-btn-review">REVIEW</a></td>
+                <td class="sg-center"><a href="approval.html" class="sg-btn-review">REVIEW</a></td>
               </tr>
               <tr>
                 <td>100006</td>
@@ -154,7 +154,7 @@
                 <td>BSCS</td>
                 <td class="sg-bold">5/27/2026</td>
                 <td>BSCS-2A</td>
-                <td class="sg-center"><a href="#" class="sg-btn-review">REVIEW</a></td>
+                <td class="sg-center"><a href="approval.html" class="sg-btn-review">REVIEW</a></td>
               </tr>
             </tbody>
           </table>

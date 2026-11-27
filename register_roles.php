@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once 'db.php';              // your mysqli connection ($conn)
+require_once 'auth_functions.php';  // createAuthCode() / sendAuthCode(), same as login.php
 
 /* ---------- ROLE CONFIG ---------- */
 $roles = [
@@ -35,7 +37,7 @@ function old(string $key): string
 }
 
 /* ---------- CURRENT ROLE (whitelisted) ---------- */
-$role = $_POST["role"] ?? "instructor";
+$role = $_POST["role"] ?? $_GET["role"] ?? "instructor";   // login.php links here with ?role=
 if (!array_key_exists($role, $roles)) {
     $role = "instructor";
 }
@@ -57,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = "First name and last name are required.";
     }
 
-    if (!preg_match('/^[a-z]+\.[a-z]+@cvsu\.edu\.ph$/', $email)) {
+    if (!preg_match('/^[a-z0-9._%+\-]+@cvsu\.edu\.ph$/', $email)) {
         $errors[] = "Use your official CvSU email (firstname.lastname@cvsu.edu.ph).";
     }
 
@@ -104,26 +106,84 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     /* ---------- SAVE ACCOUNT ---------- */
+
+    // 1) Only employees on the official list may register, and only for the role they are listed under.
+    //    A cvsu.edu.ph address alone is NOT enough: students have CvSU emails too.
+    if (!$errors) {
+        $stmt = $conn->prepare(
+            'SELECT id FROM authorized_employees
+              WHERE email = ? AND employee_id = ? AND role = ? AND is_active = 1 LIMIT 1'
+        );
+        $stmt->bind_param('sss', $email, $employee_id, $role);
+        $stmt->execute();
+        if (!$stmt->get_result()->fetch_assoc()) {
+            // same message whichever part mismatched, so nobody can probe which emails are on the list
+            $errors[] = "Your CvSU email and Employee ID are not on the authorized "
+                      . strtolower($roles[$role]["label"]) . " list. Please contact the administrator.";
+        }
+    }
+
+    // 2) One account per email
+    if (!$errors) {
+        $stmt = $conn->prepare('SELECT id FROM users WHERE email = ? LIMIT 1');
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        if ($stmt->get_result()->fetch_assoc()) {
+            $errors[] = "An account with this email already exists. Please log in.";
+        }
+    }
+
+    // 3) Create the account. It stays 'pending' until the email is verified
+    //    (coordinators additionally wait for administrator approval).
     if (!$errors) {
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $middle    = $middle_name !== "" ? $middle_name : null;
 
-        // Instructors: verify email first. Coordinators: admin approval first.
-        $status = $role === "coordinator" ? "pending_approval" : "pending_verification";
+        $conn->begin_transaction();
+        try {
+            $stmt = $conn->prepare(
+                "INSERT INTO users (email, password_hash, role, account_status, email_verified)
+                 VALUES (?, ?, ?, 'pending', 0)"
+            );
+            $stmt->bind_param('sss', $email, $password_hash, $role);
+            $stmt->execute();
+            $userId = (int) $conn->insert_id;
 
-        // TODO: connect your database and insert, e.g. with PDO:
-        //
-        // $stmt = $pdo->prepare(
-        //   "INSERT INTO users
-        //    (role, first_name, middle_name, last_name, email, password_hash,
-        //     employee_id, department, academic_rank, designation, status)
-        //    VALUES (?,?,?,?,?,?,?,?,?,?,?)"
-        // );
-        // $stmt->execute([$role, $first_name, $middle_name, $last_name, $email,
-        //                 $password_hash, $employee_id, $department, $rank,
-        //                 $designation, $status]);
-        //
-        // Check for a duplicate email first, then redirect:
-        // header("Location: login.php?registered=1"); exit;
+            $stmt = $conn->prepare(
+                'INSERT INTO employee_profiles
+                   (user_id, employee_id, first_name, middle_name, last_name, department, academic_rank, designation)
+                 VALUES (?,?,?,?,?,?,?,?)'
+            );
+            $stmt->bind_param('isssssss', $userId, $employee_id, $first_name, $middle,
+                              $last_name, $department, $rank, $designation);
+            $stmt->execute();
+
+            $conn->commit();
+        } catch (Throwable $e) {
+            $conn->rollback();
+            $errors[] = "We could not create your account. Please try again.";
+        }
+
+        if (!$errors) {
+            // Same one-time-code flow as login.php: code is generated, emailed, then auth.php verifies it.
+            try {
+                $code = createAuthCode($conn, $userId, "registration");
+                sendAuthCode($email, $code, "registration");
+
+                $_SESSION["pending_auth_user_id"] = $userId;
+                $_SESSION["pending_auth_purpose"] = "registration";
+                $_SESSION["pending_auth_email"]   = $email;
+                $_SESSION["pending_auth_role"]    = $role;
+
+                // DEVELOPMENT ONLY (same as login.php): auth.php shows the code until PHPMailer is configured.
+                $_SESSION["dev_auth_code"] = $code;
+
+                header("Location: auth.php");
+                exit;
+            } catch (Throwable $e) {
+                $errors[] = "Your account was created, but the verification code could not be sent. Please contact the administrator.";
+            }
+        }
     }
 }
 ?>
@@ -234,7 +294,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         id="email"
                         name="email"
                         placeholder="firstname.lastname@cvsu.edu.ph"
-                        pattern="[A-Za-z]+\.[A-Za-z]+@cvsu\.edu\.ph"
+                        pattern="[A-Za-z0-9._%+\-]+@cvsu\.edu\.ph"
                         value="<?= old("email") ?>"
                         required
                     >
@@ -268,6 +328,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             required
                         >
                     </div>
+                </div>
+
+                <!-- ROLE-SPECIFIC FIELDS (shown/hidden by applyRole below) -->
+                <div class="form-group role-fields" data-role="instructor">
+                    <label for="academic_rank">Academic Rank</label>
+                    <select id="academic_rank" name="academic_rank" required>
+                        <option value="">Select your rank</option>
+                        <?php foreach ($ranks as $r): ?>
+                            <option value="<?= htmlspecialchars($r) ?>" <?= ($_POST["academic_rank"] ?? "") === $r ? "selected" : "" ?>>
+                                <?= htmlspecialchars($r) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group role-fields" data-role="coordinator" hidden>
+                    <label for="designation">Coordinator Designation</label>
+                    <input
+                        type="text"
+                        id="designation"
+                        name="designation"
+                        placeholder="e.g. BSCS Program Coordinator"
+                        value="<?= old("designation") ?>"
+                    >
                 </div>
 
                 <div class="form-group">
