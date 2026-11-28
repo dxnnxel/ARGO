@@ -20,17 +20,6 @@ $stats = [
     ["icon" => "fa-clipboard-list", "tone" => "amber", "label" => "Pending Approvals", "value" => "18",   "note" => "5 need attention"],
     ["icon" => "fa-heartbeat",      "tone" => "green", "label" => "System Status",    "value" => "Online", "note" => "All services operational"],
 ];
-$activity = [
-    ["icon" => "fa-clipboard-check", "tone" => "green", "title" => "Grade submission approved",   "desc" => "Harvey Leen approved grades for BSCS-2B · DCIT 25", "time" => "12 minutes ago"],
-    ["icon" => "fa-user",            "tone" => "blue",  "title" => "New instructor account created", "desc" => "Admin created an account for Prof. Elena Flores",   "time" => "1 hour ago"],
-    ["icon" => "fa-clipboard-check", "tone" => "green", "title" => "Final grades submitted",       "desc" => "Prof. Miguel Hugo submitted 38 student records",    "time" => "3 hours ago"],
-    ["icon" => "fa-shield-alt",      "tone" => "amber", "title" => "Account access restored",      "desc" => "Student account 240100118 was reactivated",        "time" => "Yesterday, 4:15 PM"],
-];
-$roles = [
-    ["Students", 1126, 1284], ["Instructors", 48, 1284 / 2.2], ["Coordinators", 9, 1284 / 3.7], ["Administrators", 3, 1284 / 6.5],
-];
-$roleMax = 1284;
-$roleWidths = ["Students" => 88, "Instructors" => 56, "Coordinators" => 32, "Administrators" => 16];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,12 +65,6 @@ $roleWidths = ["Students" => 88, "Instructors" => 56, "Coordinators" => 32, "Adm
                 <a href="admin_dashboard.php" class="active">
                     <i class="fas fa-th-large"></i>
                     <span>Overview</span>
-                </a>
-            </li>
-            <li>
-                <a href="portal_access.php">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Portal Access</span>
                 </a>
             </li>
             <li>
@@ -191,7 +174,7 @@ $roleWidths = ["Students" => 88, "Instructors" => 56, "Coordinators" => 32, "Adm
             <?php endforeach; ?>
         </section>
 
-        <!-- activity + accounts by role -->
+        <!-- activity + accounts by role
         <section class="two-col">
             <div class="card" id="activity">
                 <div class="panel-head card-head">
@@ -228,7 +211,7 @@ $roleWidths = ["Students" => 88, "Instructors" => 56, "Coordinators" => 32, "Adm
                     <a href="user_management.php" class="manage-btn">Manage user accounts <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
-        </section>
+        </section>-->
 
         <!-- system health -->
         <section class="card health">
