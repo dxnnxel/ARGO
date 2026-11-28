@@ -421,24 +421,10 @@ if (
                     );
 
 
-                    if (
-                        $user["role"]
-                        === "administrator"
-                    ) {
-
-                        header(
-                            "Location: student.php"
-                        );
-
-                    } else {
-
-                        header(
-                            "Location: student.php"
-                        );
-                    }
+                   header("Location: " . homePageForRole($user["role"]));
+                   exit;
 
 
-                    exit;
                 }
             }
 

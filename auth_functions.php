@@ -572,6 +572,18 @@ function requireAdmin(
     $_SESSION["user_email"] =
         $administrator["email"];
 }
+/*Helper*/
+function homePageForRole(string $role): string
+{
+    $pages = [
+        "student"       => "student.php",
+        "instructor"    => "list.php",
+        "coordinator"   => "coordinator.php",
+        "administrator" => "admin_dashboard.php",
+    ];
+
+    return $pages[$role] ?? "login.php";
+}
 
 
 /* LOGOUT */

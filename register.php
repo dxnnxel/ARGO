@@ -9,17 +9,8 @@ $error = "";
 
 /* ALREADY LOGGED IN */
 
-if (isset($_SESSION["user_id"])) {
-    $role = $_SESSION["user_role"] ?? $_SESSION["role"] ?? "student";
-
-    if ($role === "administrator") {
-        header("Location: admin_dashboard.php");
-    } else {
-        header("Location: student_dashboard.php");
-    }
-
-    exit;
-}
+header("Location: " . homePageForRole($user["role"]));
+exit;
 
 /* REGISTER */
 

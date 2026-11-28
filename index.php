@@ -1,3 +1,10 @@
+    <?php
+session_start();
+if (!isset($_SESSION["user_id"]) || !in_array($_SESSION["user_role"] ?? "", ["instructor", "administrator"], true)) {
+    header("Location: login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,8 +15,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <link rel="stylesheet" href="argo.css"/>
-    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="argo.css?v=2"/>
+    <link rel="stylesheet" href="responsive.css?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <body>
         <!--sidebar-->
@@ -33,13 +40,13 @@
        </div>
            <ul class="menu">
         <li>
-          <a href="index.html">
+          <a href="index.php">
            <i class="fas fa-book-open fa-outline"></i> 
             <span>My Classes</span>
             </a>
        </li>
         <li>
-            <a href="list.html">
+            <a href="list.php">
             <i class="fas fa-file-alt fa-outline"></i>  
             <span>Student List</span>
             </a>                              
@@ -49,6 +56,7 @@
            <span>Input Grades</span>
           </a>
         </li>
+        <li><a href="logout.php">Log out</a></li>
       
     </ul>
   </div>

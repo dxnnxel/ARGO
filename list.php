@@ -4,7 +4,7 @@ require_once 'db.php';          // your existing mysqli connection ($conn)
 
 /* ---------- settings ---------- */
 $ENFORCE_ROLE = false;           // only users with role 'administrator' may open this page
-const PASSING = 75;             // passing percentage
+const PASSING = 75;            
 const WEIGHTS = ['attendance' => 0.10, 'quiz' => 0.20, 'activity' => 0.30, 'exam' => 0.40];
 const CATEGORY_ORDER = ['quiz', 'activity', 'exam'];
 const CATEGORY_LABEL = ['quiz' => 'QUIZ', 'activity' => 'ACTIVITY', 'exam' => 'EXAM'];
@@ -21,7 +21,6 @@ function run(mysqli $c, string $sql, string $types = '', array $p = []): array {
 }
 function h($s): string { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
 
-/* ---------- who is logged in ---------- */
 $me = run($conn, 'SELECT u.role, COALESCE(ep.first_name, sp.first_name) AS first_name,
                          COALESCE(ep.last_name, sp.last_name) AS last_name
                     FROM users u
@@ -190,8 +189,8 @@ foreach ($scores as $byAct) { foreach ($byAct as $aid => $v) { $scoreCount[$aid]
         <title>ARGO</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="argo.css?v=3">
-        <link rel="stylesheet" href="responsive.css">
+        <link rel="stylesheet" href="argo.css?v=2">
+        <link rel="stylesheet" href="responsive.css?v=2">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head>
     <body>
@@ -215,9 +214,10 @@ foreach ($scores as $byAct) { foreach ($byAct as $aid => $v) { $scoreCount[$aid]
         </div>
       </div>
       <ul class="menu">
-        <li><a href="index.html"><i class="fas fa-book-open fa-outline"></i><span>My Classes</span></a></li>
-        <li><a href="list.php?subject_id=<?= $subjectId ?>"><i class="fas fa-file-alt fa-outline"></i><span>Student List</span></a></li>
+        <li><a href="index.php"><i class="fas fa-book-open fa-outline"></i><span>My Classes</span></a></li>
+        <li><a href="list.php"><i class="fas fa-file-alt fa-outline"></i><span>Student List</span></a></li>
         <li><a href="input-grades.html"><i class="fas fa-file-alt fa-book"></i><span>Input Grades</span></a></li>
+        <li><a href="logout.php">Log out</a></li>
       </ul>
     </div>
 

@@ -76,7 +76,7 @@ if (isset($_SESSION["user_id"])) {
             (int) $user["email_verified"] === 1
         ) {
 
-            header("Location: " . ($homePages[$user["role"]] ?? "student.php"));
+           header("Location: " . homePageForRole($user["role"]));
 
 
             exit;
@@ -187,7 +187,7 @@ if (
                 $error =
                     "Invalid email or password.";
             
-            }elseif ($user["role"] !== $loginAs) {
+            } elseif ($user["role"] !== $loginAs && $user["role"] !== "administrator") {
 
                 $error =
                       "No " . ucfirst($loginAs) . " account found for this email.";
