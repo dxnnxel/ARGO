@@ -6,7 +6,7 @@ if (!isset($_SESSION["user_id"]) || ($_SESSION["user_role"] ?? "") !== "administ
     exit;
 }
 
-$adminName = $_SESSION["user_name"] ?? "Alonel Hugo";
+$adminName = $_SESSION["user_name"] ?? "Admin";
 $initials = "";
 foreach (preg_split('/\s+/', trim($adminName)) as $part) {
     $initials .= strtoupper(substr($part, 0, 1));
